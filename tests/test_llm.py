@@ -48,6 +48,12 @@ def test_system_prompt(kb):
     assert prompt == build_system_prompt(kb)
 
 
+def test_system_prompt_explains_escaping(kb):
+    prompt = build_system_prompt(kb)
+    assert "записаны как &amp; &lt; &gt;" in prompt
+    assert prompt.index("записаны как &amp;") < prompt.index("Правила ответа клиенту")
+
+
 # --- OpenAILLMClient: разбор ответа SDK без сети ---
 
 def make_client(monkeypatch, result=None, error=None, **settings):
